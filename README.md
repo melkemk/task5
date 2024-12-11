@@ -38,8 +38,8 @@ To get started, you can use Docker and Docker Compose to set up the services. Fo
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone <repository_url>
-   cd <repository_name>
+   git clone https://github.com/melkemk/task5.git
+   cd task5
 2. Build and start the Docker containers:
    ```
    docker-compose up --build

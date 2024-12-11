@@ -1,0 +1,23 @@
+
+# Ignore virtual environment directories
+venv/
+env/
+.venv/
+myenv/
+
+# Ignore .env files (sensitive environment variables)
+.env
+
+# Ignore logs
+*.log
+
+# Ignore any temporary or backup files
+*.swp
+*~
+
+# Ignore PyCharm and VSCode project files
+.idea/
+.vscode/
+
+# Ignore other IDE-related files
+*.iml

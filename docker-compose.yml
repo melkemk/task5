@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5675:5672"     # Default RabbitMQ port for messaging
+      - "15675:15672"   # Management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: always  
+
+  producer:
+    build:
+      context: .
+    container_name: rabbitmq-producer
+    depends_on:
+      - rabbitmq
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      bash -c "while true; do python producer.py 'user1' 'user2' 'Hello from Producer!'; sleep 1; done"
+    restart: always   # Ensure Producer restarts automatically if it stops unexpectedly
+
+  consumer:
+    build:
+      context: .
+    container_name: rabbitmq-consumer
+    depends_on:
+      - rabbitmq
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["python", "consumer.py", "user2"]
+    restart: always  
+
+volumes:
+  rabbitmq_data:
+    driver: local
